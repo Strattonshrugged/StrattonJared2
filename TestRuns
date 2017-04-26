@@ -1,0 +1,80 @@
+
+
+Test Run One
+
+GREETINGS PROFESSOR FALKEN ... I MEAN LEE ...
+WOULD YOU LIKE TO PLAY A GAME?
+
+1. Investment Calculator
+2. Distance Calculator
+3. Global Thermonuclear War
+Please make a selection and enter the number: 
+1
+Investment Calculator Is Online
+
+Please enter the number of years you would like to calculate : 
+12
+12 years will be calculated.
+
+Please enter your initial investment : 
+1000
+Initial deposit shall be $1000.00
+
+Please set the interest rate to be calculated : 
+4.2
+Interest rate set at 4.2%
+
+Please enter your expected annual deposit (contribution) : 
+1000
+Annual deposit expected : $1000.00
+
+  		 Current 		4.2%				   New
+ Year 	 Balance 	 Interest	 Deposit 	 Balance
+======	=========	==========	=========	=========
+1   	$ 1000.00   $    42.00  $ 1000.00   $ 2042.00
+2   	$ 2042.00   $    85.76  $ 1000.00   $ 3127.76
+3   	$ 3127.76   $   131.37  $ 1000.00   $ 4259.13
+4   	$ 4259.13   $   178.88  $ 1000.00   $ 5438.01
+5   	$ 5438.01   $   228.40  $ 1000.00   $ 6666.41
+6   	$ 6666.41   $   279.99  $ 1000.00   $ 7946.40
+7   	$ 7946.40   $   333.75  $ 1000.00   $ 9280.15
+8   	$ 9280.15   $   389.77  $ 1000.00   $10669.92
+9   	$10669.92   $   448.14  $ 1000.00   $12118.06
+10   	$12118.06   $   508.96  $ 1000.00   $13627.02
+11   	$13627.02   $   572.33  $ 1000.00   $15199.35
+12   	$15199.35   $   638.37  $ 1000.00   $16837.72
+
+Process finished with exit code 0
+
+
+
+Test Run Two
+
+GREETINGS PROFESSOR FALKEN ... I MEAN LEE ...
+WOULD YOU LIKE TO PLAY A GAME?
+
+1. Investment Calculator
+2. Distance Calculator
+3. Global Thermonuclear War
+Please make a selection and enter the number: 
+3
+Really? Because that worked out so well for Matthew Broderick ...
+Try something else.
+2
+Find the distance between two cities!
+Please enter the latitude of point A in decimal format
+190
+Error: Latitude out of bounds
+Please enter the latitude of point A in decimal format
+45
+Please enter the longitude of point A in decimal format
+-120
+Please enter the latitude of point B in decimal format
+20
+Please enter the longitude of point B in decimal format
+-140
+Radius of the Earth is set at 6372.795 km
+The distance between these points is 3334.106 km
+Process finished with exit code 0
+
+

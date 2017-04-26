@@ -1,35 +1,78 @@
 /**
  Created By Jared Stratton on 4/15/17.
- deficiency/bug: baseline Program 2 data yields answer off by 1-cent, rounding error?
- Cannot investigate without comparing code
+ deficiency: Cannot get distance calculator to work, textbook is not helpful
  */
 
 import java.util.*;
-import java.text.DecimalFormat;
 
 public class StrattonJared2 {
+
     public static void main(String[] args)  {
+        Scanner MenuSelect = new Scanner(System.in);
+        int MainMenu = 0;
+        String MMInput;
+        int MMInt;
 
-        // Part One of Program Two, Call
-        InvestmentCalculator();
+        System.out.println("GREETINGS PROFESSOR FALKEN ... I MEAN LEE ...");
+        System.out.println("WOULD YOU LIKE TO PLAY A GAME?");
+        System.out.println("");
+        System.out.println("1. Investment Calculator");
+        System.out.println("2. Distance Calculator");
+        System.out.println("3. Global Thermonuclear War");
+        System.out.println("Please make a selection and enter the number: ");
 
+        // remove anything that is not a number from the string (found on stack overflow)
+
+        while (MainMenu == 0) {
+            MMInput = MenuSelect.nextLine();
+            MMInput = MMInput.replaceAll("[^\\d.]", "");
+            // try to parse the string for an integer
+            try {
+                MMInt = Integer.parseInt(MMInput);
+                // if parsing Input for some kind of integer WORKS, make sure that value is actually an integer
+                if (MMInt == (int)MMInt)    {
+                    // everything checks out, exit loop by changing condition
+                    MainMenu = MMInt;
+                    if (MainMenu == 1)   {
+                        InvestmentCalculator();
+                    }   else if (MainMenu == 2)    {
+                        DistanceCalculator();
+                    }   else if (MainMenu == 3) {
+                        System.out.println("Really? Because that worked out so well for Matthew Broderick ...");
+                        System.out.println("Try something else.");
+                        MainMenu = 0;
+                    }   else    {
+                        System.out.println("Error: Invalid Selection");
+                        MainMenu = 0;
+                    }
+                }
+            }
+            catch (NumberFormatException someNameGoesHere) {
+                System.out.println("Error: I do not understand. Please enter the number of the activity.");
+            }
+        }   // end of while loop Main Menu
     }   // end of Main Method
 
-    // Part One of Program Two, Method
+    // Program Two, Part One
     public static void InvestmentCalculator()   {
         System.out.println("Investment Calculator Is Online");
-        // creating format for dollar values
-        DecimalFormat bucks = new DecimalFormat("#.00");
+        Scanner console = new Scanner(System.in);
         // declare variables that exist outside of for-loops
         // some variables have a default value which triggers the conditional statements of while-loopsas
-        Scanner console = new Scanner(System.in);
         String RawInput;
         int IntInput;
         int Years = -1;
-        // double DoubleInput was right here but it now exists only in the DoubleCheck function
         double Balance = -1;
         double InterestRate = -1;
         double Contribution = -1;
+        int TestMode = 0;
+
+        if (TestMode == 1)  {
+            Years = 4;
+            Balance = 1000;
+            InterestRate = 6.5;
+            Contribution = 100;
+        }
 
         // get value for years, doesn't have separate checking method because it's the only int
         while (Years == -1) {
@@ -74,7 +117,7 @@ public class StrattonJared2 {
                 Balance = -1.0;
             }
             if (Balance >= 0)   {
-                System.out.println("Initial deposit shall be $" + bucks.format(Balance));
+                System.out.printf("Initial deposit shall be $%.2f\n",Balance);
             }
         }
 
@@ -108,13 +151,13 @@ public class StrattonJared2 {
                 Contribution = -1.0;
             }
             if (Contribution >= 0)   {
-                System.out.println("Annual deposit expected : $" + bucks.format(Contribution));
+                System.out.printf("Annual deposit expected : $%.2f\n",Contribution);
             }
         }
 
         // display header
         String InterestString = String.valueOf(InterestRate);
-        String H1 = "  \t\t Current \t\t%s%%\t\t\t\t   New\n";
+        String H1 = "\n  \t\t Current \t\t%s%%\t\t\t\t   New\n";
         String H2 = " Year \t Balance \t Interest\t Deposit \t Balance\n";
         String H3 = "======\t=========\t==========\t=========\t=========\n";
 
@@ -123,38 +166,27 @@ public class StrattonJared2 {
         System.out.printf(H3);
 
         // create and print each year
-        String Y;
-        int y;
-        double Current;
+        String Layout;
+        int year;
         double InterestAmount;
-        double Deposit = Contribution;
+        double NewBalance;
 
-        Double NewBalance;
-        for (y = 1; y < (Years + 1); y++) {
-            NewBalance = Balance + (Balance * (InterestRate/100)) + Contribution;
-            //  year      current  interest  deposit  newBalance
-            Y = "%d\t\t$%f\t    $%f\t     $%f\t    $%f";
-            /*
-                + "\t\t$" + bucks.format(Balance)
-                + "\t$" + bucks.format((Balance * (InterestRate/100)))
-                + "\t$" + bucks.format(Contribution)
-                + "\t$" + bucks.format(NewBalance)
-                + "\n";
-            */
-            System.out.printf(Y,
-                    bucks.format(Balance),
-                    bucks.format((Balance * (InterestRate/100))),
-                    bucks.format(Contribution),
-                    bucks.format(NewBalance));
+        for (year = 1; year < (Years + 1); year++) {
+            InterestAmount = Balance * (InterestRate/100.0);
+            // persistently had off-by-one error until this, had to cast as double
+            InterestAmount = (double)Math.round(InterestAmount * 100) / 100;
+            NewBalance = Balance + InterestAmount + Contribution;
+            Layout = "%d" + "       " + "$%8.2f" + "   " + "$%9.2f" + "  " + "$%8.2f" + "   " + "$%8.2f\n";
+            System.out.printf(Layout,year,Balance,InterestAmount,Contribution,NewBalance);
             Balance = NewBalance;
         }
-    }
+
+    } // end of Investment Calculator Method
 
     // method to verify and clean inputs of double-type variables
     public static double DoubleCheck(String RawInput)  {
         // Remove everything from the string that is not a number
         RawInput = RawInput.replaceAll("[^\\d.]", "");
-
         try {
             double DoubleInput = Double.parseDouble(RawInput);
             // makes sure it is a double
@@ -176,4 +208,82 @@ public class StrattonJared2 {
             return -1.0;
         }
     }   // end of Doublecheck method
+
+
+
+    // Program Two Part Two
+    // Tried numerous times using arccos method in book
+    // looked up Haversine Method and received a very close answer on the first try
+    // this part does not have the input resiliency of the first part
+    public static void DistanceCalculator() {
+        System.out.println("Find the distance between two cities!");
+        Scanner console = new Scanner(System.in);
+        String Input;
+        double Lat1 = 200.0;
+        double Long1 = 200.0;
+        double Lat2 = 200.0;
+        double Long2 = 200.0;
+
+        while (Lat1 = 200.0) {
+            System.out.println("Please enter the latitude of city A in decimal format");
+            Input = console.nextLine();
+            if ((Input < -90.0) || (Input > 90.0))  {
+                System.out.println("Error: Latitude out of bounds");
+            }   else    {
+                Lat1 = Input;
+            }
+        }
+        while (Long2 = 200.0) {
+            System.out.println("Please enter the longitude of city A in decimal format");
+            Input = console.nextLine();
+            if ((Input < -180.0) || (Input > 180.0))  {
+                System.out.println("Error: Longitude out of bounds");
+            }   else    {
+                Lat1 = Input;
+            }
+        }
+        while (Lat2 = 200.0) {
+            System.out.println("Please enter the latitude of city B in decimal format");
+            Input = console.nextLine();
+            if ((Input < -90.0) || (Input > 90.0))  {
+                System.out.println("Error: Latitude out of bounds");
+            }   else    {
+                Lat1 = Input;
+            }
+        }
+        while (Long2 = 200.0) {
+            System.out.println("Please enter the longitude of city A in decimal format");
+            Input = console.nextLine();
+            if ((Input < -180.0) || (Input > 180.0))  {
+                System.out.println("Error: Longitude out of bounds");
+            }   else    {
+                Lat1 = Input;
+            }
+        }
+
+        double Radius = 6372.795;
+        //double Lat1 = 36.12;
+        //double Long1 = -86.67;
+        //double Lat2 = 33.94;
+        //double Long2 = -118.40;
+        double LatDiff = Math.toRadians(Lat1 - Lat2);
+        double LongDiff = Math.toRadians(Long1 - Long2);
+        double theA =
+            Math.sin(LatDiff/2) *
+            Math.sin(LatDiff/2) +
+            Math.cos(Math.toRadians(Lat1)) *
+            Math.cos(Math.toRadians(Lat2)) *
+            Math.sin(LongDiff/2) *
+            Math.sin(LongDiff/2);
+        double theC = 2 * Math.atan2(Math.sqrt(theA), Math.sqrt(1-theA));
+        // theC must be equal to DeltaSigma in the book's description
+        double Answer = Radius * theC;
+
+        System.out.println("Answer ...");
+        System.out.println(Answer);
+
+    }
+
+
+
 }   // end of Class

@@ -1,6 +1,5 @@
 /**
  Created By Jared Stratton on 4/15/17.
- deficiency: Cannot get distance calculator to work, textbook is not helpful
  */
 
 import java.util.*;
@@ -13,6 +12,7 @@ public class StrattonJared2 {
         String MMInput;
         int MMInt;
 
+        // I wanted a main menu, it looked stupid with only two options, and so this happened
         System.out.println("GREETINGS PROFESSOR FALKEN ... I MEAN LEE ...");
         System.out.println("WOULD YOU LIKE TO PLAY A GAME?");
         System.out.println("");
@@ -20,8 +20,6 @@ public class StrattonJared2 {
         System.out.println("2. Distance Calculator");
         System.out.println("3. Global Thermonuclear War");
         System.out.println("Please make a selection and enter the number: ");
-
-        // remove anything that is not a number from the string (found on stack overflow)
 
         while (MainMenu == 0) {
             MMInput = MenuSelect.nextLine();
@@ -65,8 +63,8 @@ public class StrattonJared2 {
         double Balance = -1;
         double InterestRate = -1;
         double Contribution = -1;
+        // when I didn't want to re-input the data I just flicked this variable over to 1, it's just for testing
         int TestMode = 0;
-
         if (TestMode == 1)  {
             Years = 4;
             Balance = 1000;
@@ -176,12 +174,14 @@ public class StrattonJared2 {
             // persistently had off-by-one error until this, had to cast as double
             InterestAmount = (double)Math.round(InterestAmount * 100) / 100;
             NewBalance = Balance + InterestAmount + Contribution;
-            Layout = "%d" + "       " + "$%8.2f" + "   " + "$%9.2f" + "  " + "$%8.2f" + "   " + "$%8.2f\n";
+            Layout = "%d" + "   \t" + "$%8.2f" + "   " + "$%9.2f" + "  " + "$%8.2f" + "   " + "$%8.2f\n";
             System.out.printf(Layout,year,Balance,InterestAmount,Contribution,NewBalance);
             Balance = NewBalance;
         }
 
     } // end of Investment Calculator Method
+
+
 
     // method to verify and clean inputs of double-type variables
     public static double DoubleCheck(String RawInput)  {
@@ -218,46 +218,51 @@ public class StrattonJared2 {
     public static void DistanceCalculator() {
         System.out.println("Find the distance between two cities!");
         Scanner console = new Scanner(System.in);
-        String Input;
+        String RawInput;
+        double Input;
         double Lat1 = 200.0;
         double Long1 = 200.0;
         double Lat2 = 200.0;
         double Long2 = 200.0;
 
-        while (Lat1 = 200.0) {
-            System.out.println("Please enter the latitude of city A in decimal format");
-            Input = console.nextLine();
-            if ((Input < -90.0) || (Input > 90.0))  {
+        while (Lat1 == 200.0) {
+            System.out.println("Please enter the latitude of point A in decimal format");
+            RawInput = console.nextLine();
+            Input = Double.parseDouble(RawInput);
+            if ((Input <= -90.0) || (Input >= 90.0))  {
                 System.out.println("Error: Latitude out of bounds");
             }   else    {
                 Lat1 = Input;
             }
         }
-        while (Long2 = 200.0) {
-            System.out.println("Please enter the longitude of city A in decimal format");
-            Input = console.nextLine();
-            if ((Input < -180.0) || (Input > 180.0))  {
+        while (Long1 == 200.0) {
+            System.out.println("Please enter the longitude of point A in decimal format");
+            RawInput = console.nextLine();
+            Input = Double.parseDouble(RawInput);
+            if ((Input <= -180.0) || (Input >= 180.0))  {
                 System.out.println("Error: Longitude out of bounds");
             }   else    {
-                Lat1 = Input;
+                Long1 = Input;
             }
         }
-        while (Lat2 = 200.0) {
-            System.out.println("Please enter the latitude of city B in decimal format");
-            Input = console.nextLine();
-            if ((Input < -90.0) || (Input > 90.0))  {
+        while (Lat2 == 200.0) {
+            System.out.println("Please enter the latitude of point B in decimal format");
+            RawInput = console.nextLine();
+            Input = Double.parseDouble(RawInput);
+            if ((Input <= -90.0) || (Input >= 90.0))  {
                 System.out.println("Error: Latitude out of bounds");
             }   else    {
-                Lat1 = Input;
+                Lat2 = Input;
             }
         }
-        while (Long2 = 200.0) {
-            System.out.println("Please enter the longitude of city A in decimal format");
-            Input = console.nextLine();
-            if ((Input < -180.0) || (Input > 180.0))  {
+        while (Long2 == 200.0) {
+            System.out.println("Please enter the longitude of point B in decimal format");
+            RawInput = console.nextLine();
+            Input = Double.parseDouble(RawInput);
+            if ((Input <= -180.0) || (Input >= 180.0))  {
                 System.out.println("Error: Longitude out of bounds");
             }   else    {
-                Lat1 = Input;
+                Long2 = Input;
             }
         }
 
@@ -279,10 +284,9 @@ public class StrattonJared2 {
         // theC must be equal to DeltaSigma in the book's description
         double Answer = Radius * theC;
 
-        System.out.println("Answer ...");
-        System.out.println(Answer);
-
-    }
+        System.out.printf("Radius of the Earth is set at %.3f km\n",Radius);
+        System.out.printf("The distance between these points is %.3f km",Answer);
+    }   // end of Distance Calculator method
 
 
 
